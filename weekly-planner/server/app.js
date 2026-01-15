@@ -39,7 +39,7 @@ app.post("/api/tasks", (req, res) => {
     const { day, text } = req.body;
 
     //Validering: stoppa tömma värden
-    if (!day || !text || text.trim()){
+    if (!day || !text || !text.trim()){
         return res.status(400).json({ error: "Day and text are required" });
     } 
     const stmt = db.prepare("INSERT INTO tasks (day, text, createdAt) VALUES (?, ?, ?)");

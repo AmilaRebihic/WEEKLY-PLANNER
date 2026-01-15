@@ -1,3 +1,5 @@
+
+
 //nu kopllar jag front end till backend
 
 const BASE = "http://localhost:4000/api/tasks";
@@ -16,12 +18,21 @@ export async function createTask(day, text) {
         headers: {"Content-Type": "application/json"  },
         body: JSON.stringify({ day, text }),
     });
-    return res.json();
+    const data = await res.json();
+
+
+  if (!res.ok) {
+    throw new Error(data.error || "Could not create task");
+  }
+
+  return data; // <-- riktig task
 }
-   /** Toggle done */
+   
 export async function toggleTask(id) {
   const res = await fetch(`${BASE}/${id}/toggle`, { method: "PATCH" });
-  return res.json();
+   const data = await res.json();
+   if (!res.ok) throw new Error(data.error || "Could not toggle task");
+  return data;
 }
     //Tar bort en task
     export async function deleteTask(id) {
